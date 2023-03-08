@@ -1,6 +1,6 @@
 import React from "react";
 import Add from "../assets/addAvatar.png";
-import "./styles/Register.css";
+import "../styles/Register.css";
 
 const Register = () => {
   return (
