@@ -36,13 +36,13 @@ form {
   flex-direction: column;
 }
 
-input {
+.formWrapper input {
   padding: 15px;
   border: none;
   width: 250px;
   border-bottom: 1px solid #a7bcff;
 }
-::placeholder {
+.formWrapper ::placeholder {
   color: rgb(175, 175, 175);
 }
 

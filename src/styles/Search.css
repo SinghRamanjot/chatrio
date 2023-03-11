@@ -18,13 +18,13 @@
   background-color: #2f2d52;
 }
 
-input {
+.searchForm input {
   background-color: transparent;
   border: none;
   color: white;
   outline: none;
 }
-::placeholder {
+.searchForm ::placeholder {
   color: white;
 }
 #searchImg {

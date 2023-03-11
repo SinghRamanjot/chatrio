@@ -15,7 +15,7 @@
   font-size: 18px;
 }
 ::placeholder {
-  color: red;
+  color: rgb(175, 175, 175);;
 }
 .send {
   display: flex;
