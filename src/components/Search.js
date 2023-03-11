@@ -1,5 +1,4 @@
 import React, { useContext, useState } from "react";
-import "../styles/Search.css";
 import {
   collection,
   query,
@@ -13,7 +12,6 @@ import {
 } from "firebase/firestore";
 import { db } from "../firebase/firebase";
 import { AuthContext } from "../context/AuthContext";
-
 const Search = () => {
   const [username, setUsername] = useState("");
   const [user, setUser] = useState(null);
@@ -76,7 +74,7 @@ const Search = () => {
     } catch (err) {}
 
     setUser(null);
-    setUsername("");
+    setUsername("")
   };
   return (
     <div className="search">

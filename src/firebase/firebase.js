@@ -4,6 +4,7 @@ import { getStorage } from "firebase/storage";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
+
   authDomain: "chatrio-819d4.firebaseapp.com",
   projectId: "chatrio-819d4",
   storageBucket: "chatrio-819d4.appspot.com",

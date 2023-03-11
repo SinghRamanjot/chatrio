@@ -1,17 +1,18 @@
 import React, { useState } from "react";
 import Add from "../assets/addAvatar.png";
-import "../styles/Register.css";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { auth, storage, db } from "../firebase/firebase";
+import { auth, db, storage } from "../firebase/firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { doc, setDoc } from "firebase/firestore";
-import { useNavigate , Link} from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const Register = () => {
   const [err, setErr] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
+    setLoading(true);
     e.preventDefault();
     const displayName = e.target[0].value;
     const email = e.target[1].value;
@@ -40,44 +41,44 @@ const Register = () => {
               displayName,
               email,
               photoURL: downloadURL,
-            }).then(alert("Successful"));
+            });
 
+            //create empty user chats on firestore
             await setDoc(doc(db, "userChats", res.user.uid), {});
             navigate("/");
           } catch (err) {
             console.log(err);
             setErr(true);
+            setLoading(false);
           }
         });
       });
     } catch (err) {
       setErr(true);
+      setLoading(false);
     }
   };
+
   return (
     <div className="formContainer">
       <div className="formWrapper">
-        <span className="logo">Chatrio</span>
+        <span className="logo">ChatRio</span>
         <span className="title">Register</span>
         <form onSubmit={handleSubmit}>
-          <input type="text" className="" placeholder="Display Name" />
-          <input type="email" className="" placeholder="Email" />
-          <input type="password" className="" placeholder="Password" />
-          <input
-            type="file"
-            id="file"
-            className=""
-            placeholder="Add an avatar"
-          />
+          <input required type="text" placeholder="display name" />
+          <input required type="email" placeholder="email" />
+          <input required type="password" placeholder="password" />
+          <input required style={{ display: "none" }} type="file" id="file" />
           <label htmlFor="file">
-            <img src={Add} alt="add avatar" />
-            <span className="addAvatar">Add an Avatar</span>
+            <img src={Add} alt="" />
+            <span>Add an avatar</span>
           </label>
-          <button>Sign Up</button>
+          <button disabled={loading}>Sign up</button>
+          {loading && "Uploading and compressing the image please wait..."}
           {err && <span>Something went wrong</span>}
         </form>
         <p>
-          Do you have an account? <Link to="/login">Login</Link>
+          You do have an account? <Link to="/register">Login</Link>
         </p>
       </div>
     </div>
