@@ -1,26 +1,37 @@
-import React from "react";
 import "../styles/Message.css";
+import React, { useContext, useEffect, useRef } from "react";
+import { AuthContext } from "../context/AuthContext";
+import { ChatContext } from "../context/ChatContext";
 
-const Message = () => {
+const Message = ({ message }) => {
+  const { currentUser } = useContext(AuthContext);
+  const { data } = useContext(ChatContext);
+
+  const ref = useRef();
+
+  useEffect(() => {
+    ref.current?.scrollIntoView({ behavior: "smooth" });
+  }, [message]);
+
   return (
-    <div className="message owner">
+    <div
+      ref={ref}
+      className={`message ${message.senderId === currentUser.uid && "owner"}`}
+    >
       <div className="messageInfo">
         <img
-          src="https://1.bp.blogspot.com/-mBoBIltF73U/WruDDr_BNHI/AAAAAAAAICw/ez51tiqwANw0hVkUjF80gTH0KEJMzVOiQCK4BGAYYCw/w0/edward_newgate_aka_whitebeard_by_bodskih-dc74zch.png"
+          src={
+            message.senderId === currentUser.uid
+              ? currentUser.photoURL
+              : data.user.photoURL
+          }
           alt=""
-          id="userImage"
         />
-        <span>Just now</span>
+        <span>just now</span>
       </div>
       <div className="messageContent">
-        <p className="owner" id="message">
-          Hello
-        </p>
-        {/* <img
-          src="https://1.bp.blogspot.com/-mBoBIltF73U/WruDDr_BNHI/AAAAAAAAICw/ez51tiqwANw0hVkUjF80gTH0KEJMzVOiQCK4BGAYYCw/w0/edward_newgate_aka_whitebeard_by_bodskih-dc74zch.png"
-          alt=""
-          id="dataImage"
-        /> */}
+        <p>{message.text}</p>
+        {message.img && <img src={message.img} alt="" />}
       </div>
     </div>
   );
